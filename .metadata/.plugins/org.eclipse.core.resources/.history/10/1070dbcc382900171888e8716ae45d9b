@@ -1,0 +1,29 @@
+public class method_overloading {
+// using the same method name with different parameters
+// overloading is different from overwriting
+	public static void main (String [] args){
+		int theScore=calculateScore("danyal",500);//uses the first method 2 parameter
+		System.out.println("new score is "+theScore);
+		
+		calculateScore(75);//uses the second method with one parameter 
+		
+		calculateScore(); //uses the third method no parameter 
+	}
+	
+	public static int calculateScore(String name, int score ){
+		System.out.println(name+" scored "+score+" points");
+		return score*1000;
+	}
+	
+	// first way is to change the name second away is to chage the parameters
+	public static int calculateScore(int score){
+		System.out.println("unnamed player scored "+score+ "points");
+		return score*1000;
+		
+	}
+	
+	public static void calculateScore(){
+		System.out.println("none has scored yet");
+		
+	}
+}

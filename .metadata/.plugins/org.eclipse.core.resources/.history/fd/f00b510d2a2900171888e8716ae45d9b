@@ -1,0 +1,21 @@
+
+public class methods {
+public static void main(String[] args){
+	boolean gameOver= true;
+	int score=5000;
+	int level=5;
+	int bonus=100;
+	//another way to do the previous example isby using methods
+	if (gameOver)
+	{
+		int finalScore=calculateScore(score,level,bonus);
+		System.out.println("final score is "+finalScore );
+	}
+}
+
+public static int calculateScore(int score,int level,int bonus){
+	int finalScore=score+(level*bonus);
+	
+return finalScore;}
+	
+}

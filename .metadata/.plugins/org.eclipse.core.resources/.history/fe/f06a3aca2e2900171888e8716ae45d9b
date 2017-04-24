@@ -1,0 +1,27 @@
+public class method2 {
+	public static void main(String[] args) {
+		boolean gameOver = true;
+		int score = 800;
+		int level = 5;
+		int bonus = 100;
+//this example uses methods with return
+		
+		int finalScore=calculateScore(gameOver, score, level, bonus);
+		System.out.println("final score is " + finalScore);
+		// pass the variables to the method for calculating the score
+		// we can also pass the values directly
+		finalScore=calculateScore(true, 10000, 8, 200);
+		System.out.println("final score is " + finalScore);
+
+	}
+	public static int calculateScore(boolean gameOver, int score, int level, int bonus) {
+		if (gameOver) {
+			int finalScore = score + (level * bonus);
+			finalScore+=2000;
+		return finalScore;
+		}
+return -1;
+
+	}
+
+}

@@ -1,0 +1,53 @@
+
+/*public class strings {
+
+	public static void main(String[] args)
+	{
+		//string is a class 
+		String text="whats up";
+		
+		String name = " Danyal";
+		
+		String phrase= text+name;
+		System.out.println(text+name);
+		System.out.println(phrase);
+		
+	}
+	
+}*/
+
+public class strings {
+	public static void main (String[] args)
+	{
+		//int n[]= new int [5];
+		int n[]={1,3,9,5,4};
+		int temp[]=new int [n.length];
+		temp=n;
+		int i,j;
+		//System.out.println(n);
+
+		for (j=0;j<n.length;j++)
+		{
+		
+		for (i=0;i<n.length;i++)
+		{
+			if (n[i]<n[j])
+			{
+				temp[j]=n[i];
+				//temp[j]=n[i];
+			}
+			
+					
+	
+			
+		}	
+		}
+		for (i=0;i<temp.length;i++)
+		{
+		System.out.println(temp[i]);
+		}
+	}
+	
+	
+	
+}

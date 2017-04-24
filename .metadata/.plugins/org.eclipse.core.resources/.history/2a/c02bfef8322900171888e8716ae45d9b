@@ -1,0 +1,20 @@
+public class method_overloading {
+// using the same method name with different parameters
+// overloading is different from overwriting
+	public static void main (String [] args){
+		int theScore=claculateScore("danyal",500);
+		System.out.println("new score is "+theScore);
+	}
+	
+	public static int claculateScore(String name, int score ){
+		System.out.println(name+" scored "+score+" points");
+		return score*1000;
+	}
+	
+	// first way is to change the name second away is to chage the parameters
+	public static int claculateScore(int score){
+		System.out.println("unnamed player scored "+score+ "points");
+		return score*1000;
+		
+	}
+}

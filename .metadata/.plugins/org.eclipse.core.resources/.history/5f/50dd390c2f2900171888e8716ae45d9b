@@ -1,0 +1,73 @@
+public class method2 {
+	public static void main(String[] args) {
+		boolean gameOver = true;
+		int score = 800;
+		int level = 5;
+		int bonus = 100;
+		// this example uses methods with return
+
+		int finalScore = calculateScore(gameOver, score, level, bonus);
+		System.out.println("final score is " + finalScore);
+		// pass the variables to the method for calculating the score
+		// we can also pass the values directly
+		finalScore = calculateScore(true, 10000, 8, 200);
+		System.out.println("final score is " + finalScore);
+
+		// challange: create a method called displayHighScorePosition
+		// it should take players name, position in Highscore table
+		// display the player name along with a message like "--- managed to get
+		// into position--- on the highscore table"
+		// create the second method called CalculateHighscorePosition
+		// it should take one arg player score
+		// return int
+		// the return data should be
+		// 1 if the score is >1000
+		// 2 if the score is >500 and <1000
+		// 3 if the score is >100 and <500
+		// 4 all other cases
+		// call both methods and display the result of following score
+		// 1500,900,400,50
+		int position;
+		String name="danyal";
+		position=calculatingHighscorePos(1500);
+		displayHighScorePosition(name, position);
+		position=calculatingHighscorePos(900);
+		displayHighScorePosition(name, position);
+		position=calculatingHighscorePos(400);
+		displayHighScorePosition(name, position);
+		position=calculatingHighscorePos(50);
+		displayHighScorePosition(name, position);
+		
+		
+	}
+
+	
+	///////////////////////////challange////////////////////////////////
+	public static void displayHighScorePosition(String name,int position){
+		System.out.println(name +"managed to get into position "+position+" on the High Score table");
+		
+	}
+	public static int calculatingHighscorePos(int score){
+		
+		if (score>1000)
+			return 1;
+		else if (score <1000 && score>500)
+			return 2;
+		else if (score<500 && score>100)
+			return 3;
+		else
+			return 4;
+	}	
+	/////////////////////////////////////////
+	
+	public static int calculateScore(boolean gameOver, int score, int level, int bonus) {
+		if (gameOver) {
+			int finalScore = score + (level * bonus);
+			finalScore += 2000;
+			return finalScore;
+		}
+		return -1;
+
+	}
+
+}

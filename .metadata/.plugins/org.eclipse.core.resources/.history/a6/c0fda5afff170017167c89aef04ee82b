@@ -1,0 +1,9 @@
+public class char_boolean
+{
+	public static void main (String[] args)
+	{
+		// unicode character 
+		char copyright_symbol='\u00A9';
+		System.out.println(copyright_symbol);
+	}
+}

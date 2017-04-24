@@ -1,0 +1,12 @@
+
+public class strings {
+
+	public static void main(String[] args)
+	{
+		//string is a class 
+		String text="whats up";
+		
+		System.out.println(text);
+	}
+	
+}

@@ -1,0 +1,17 @@
+
+public class strings {
+
+	public static void main(String[] args)
+	{
+		//string is a class 
+		String text="whats up";
+		
+		String name = " Danyal";
+		
+		String phrase= text+name;
+		System.out.println(text+name);
+		System.out.println(phrase);
+		
+	}
+	
+}

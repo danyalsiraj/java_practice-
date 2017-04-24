@@ -1,0 +1,23 @@
+public class operators {
+
+	public static void main (String[] args)
+	
+	{
+		int value=50;
+		
+		boolean isCar=false;
+		if(value==50)
+		{
+			isCar=true;
+			
+		}
+		boolean wasCar= isCar ? true: false;
+		// if isCar is true return true otherwise return false
+		
+		if (wasCar==true)
+		{
+			System.out.println("wasCar is true");
+		}
+	}
+	
+}

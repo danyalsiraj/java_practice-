@@ -1,0 +1,30 @@
+
+public class variables {
+
+	public static void main(String[] args)
+	{
+		// int --> 32 bit value
+		// short --> 16 bit value
+		// long --> 64 bit value 
+		//double--> decimals 
+		//float --> have to put f at the end of it (3.24f)
+		// char--> character can be anything 
+		//boolean--> true or false (1 or 0)
+		//byte--> only 8 bit of data 
+		
+		
+		int i;
+		double d;
+		char b;
+		byte max=129;
+		
+		i=1;
+		d=1.1;
+		b='c';
+		System.out.println(i+","+d+","+b);
+		System.out.println(i+d);
+		System.out.println(max);
+		
+		
+	}
+}

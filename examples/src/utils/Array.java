@@ -128,7 +128,18 @@ public class Array<E> implements List<E> {
 	@Override
 	public boolean containsAll(Collection<?> c) {
 		// TODO Auto-generated method stub
-		return false;
+		Iterator goThrough = c.iterator();
+		while (goThrough.hasNext())
+		{
+			if (!contains(goThrough.next()))
+				return false;
+		}
+//		Object[] contains=c.toArray();
+//		for (Object o :contains) {
+//			if (!contains(o))
+//				return false;
+//		}
+		return true;
 	}
 
 	@Override

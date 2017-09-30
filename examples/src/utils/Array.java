@@ -97,7 +97,12 @@ public class Array<E> implements List<E> {
 	}
 
 	private void extend() {
-		E[] temp = (E[]) new Object[size() * 2];
+		extend(size() * 2);
+
+	}
+
+	private void extend(int length) {
+		E[] temp = (E[]) new Object[length];
 
 		for (int i = 0; i < size(); i++) {
 			temp[i] = array[i];
@@ -108,18 +113,11 @@ public class Array<E> implements List<E> {
 	@Override
 	public boolean remove(Object o) {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < size(); i++) {
-			if (array[i].equals(o)) {
-				array[i] = array[i + 1];
-				for (int n = i; n < size(); i++) {
-					array[n] = array[n + 1];
 
-				}
-				// dont need to set the last value null because the it copies
-				// the null at the last value. the list never gets full because
-				// we always extend it.
-				return true;
-			}
+		int index = indexOf(o);
+		if (index >= 0) {
+			remove(index);
+			return true;
 
 		}
 		return false;
@@ -156,61 +154,159 @@ public class Array<E> implements List<E> {
 	@Override
 	public boolean addAll(int index, Collection<? extends E> c) {
 		// TODO Auto-generated method stub
-		return false;
+		shift(c.size(), index);
+		for (E o : c) {
+			add(index, o);
+			index++;
+		}
+		return true;
 	}
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
 		// TODO Auto-generated method stub
-		return false;
+
+		boolean changed = false;
+		for (Object o : c) {
+			if (remove(o))
+				changed = true;
+		}
+		return changed;
 	}
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
 		// TODO Auto-generated method stub
-		return false;
+		// Object[] temp = new Object[c.size()];
+		// int counter = 0;
+		// for (Object o : array) {
+		// if (c.contains(o)) {
+		// temp[counter] = o;
+		// counter++;
+		// }
+		// }
+		// array = (E[]) temp;
+		// currentCapacity=counter;
+
+		E[] tempArray = array;
+		clear();
+		for (Object o : tempArray) {
+			if (o != null && c.contains(o)) {
+				add((E) o);
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public void clear() {
 		// TODO Auto-generated method stub
-
+		array = (E[]) new Object[DEFAULT_SIZE];
+		currentCapacity = 0;
 	}
 
 	@Override
 	public E get(int index) {
 		// TODO Auto-generated method stub
-		return null;
+		if (index > size()) {
+			throw new IndexOutOfBoundsException();
+		}
+		return array[index];
 	}
 
 	@Override
 	public E set(int index, E element) {
 		// TODO Auto-generated method stub
-		return null;
+		if (index > size()) {
+			throw new IndexOutOfBoundsException();
+		}
+		E previousElement = array[index];
+		array[index] = element;
+		return previousElement;
 	}
 
 	@Override
 	public void add(int index, E element) {
 		// TODO Auto-generated method stub
+		if (index >= array.length) {
+			extend(index + 1);
+		}
+		if (array[index] != null) {
+			shift(1, index);
+		}
+
+		if (index > size()) {
+			currentCapacity = index + 1;
+		}
+
+		array[index] = element;
+
+	}
+
+	private void shift(int shiftBy, int index) {
+
+		if (size() + shiftBy >= array.length) {
+			// shift by wont fit in current array
+			E[] temp = (E[]) new Object[array.length + shiftBy];
+			for (int i = 0; i < size() + shiftBy; i++) {
+				if (i <= index)
+					temp[i] = array[i];
+				else {
+					temp[i + shiftBy] = array[i];
+				}
+			}
+			currentCapacity = temp.length;
+			temp = array;
+		} else {
+			// shifted elemets will fit in current array
+			for (int i = index; i < size() + shiftBy; i++) {
+				array[size() + shiftBy - i] = array[index + i];
+				array[index + i] = null;
+
+			}
+		}
 
 	}
 
 	@Override
 	public E remove(int index) {
 		// TODO Auto-generated method stub
-		return null;
+		E previousElement = array[index];
+		for (int n = index; n < size(); n++) {
+			array[n] = array[n + 1];
+
+		}
+		// dont need to set the last value null because the it copies
+		// the null at the last value. the list never gets full because
+		// we always extend it.
+		currentCapacity--;
+		return previousElement;
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+		return indexOf(o, true);
 	}
+	
+	private int indexOf(Object o, boolean getFirst) {
+		// TODO Auto-generated method stub
+		int last=-1;
 
+		for (int i = 0; i < size(); i++) {
+			if (array[i] == o || array[i].equals(o)) {
+				last = i;
+				if(getFirst){
+					return i;
+				}
+				
+			}
+		}
+
+		return last;
+	}
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+		return indexOf(o, false);
 	}
 
 	@Override

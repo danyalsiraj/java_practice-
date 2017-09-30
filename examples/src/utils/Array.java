@@ -129,23 +129,28 @@ public class Array<E> implements List<E> {
 	public boolean containsAll(Collection<?> c) {
 		// TODO Auto-generated method stub
 		Iterator goThrough = c.iterator();
-		while (goThrough.hasNext())
-		{
+		while (goThrough.hasNext()) {
 			if (!contains(goThrough.next()))
 				return false;
 		}
-//		Object[] contains=c.toArray();
-//		for (Object o :contains) {
-//			if (!contains(o))
-//				return false;
-//		}
+		// Object[] contains=c.toArray();
+		// for (Object o :contains) {
+		// if (!contains(o))
+		// return false;
+		// }
 		return true;
 	}
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
 		// TODO Auto-generated method stub
-		return false;
+		// Iterator add=c.iterator();
+		boolean changed = false;
+		for (E o : c) {
+			if (add(o))
+				changed = true;
+		}
+		return changed;
 	}
 
 	@Override

@@ -287,23 +287,24 @@ public class Array<E> implements List<E> {
 	public int indexOf(Object o) {
 		return indexOf(o, true);
 	}
-	
+
 	private int indexOf(Object o, boolean getFirst) {
 		// TODO Auto-generated method stub
-		int last=-1;
+		int last = -1;
 
 		for (int i = 0; i < size(); i++) {
 			if (array[i] == o || array[i].equals(o)) {
 				last = i;
-				if(getFirst){
+				if (getFirst) {
 					return i;
 				}
-				
+
 			}
 		}
 
 		return last;
 	}
+
 	@Override
 	public int lastIndexOf(Object o) {
 		return indexOf(o, false);
@@ -325,6 +326,34 @@ public class Array<E> implements List<E> {
 	public List<E> subList(int fromIndex, int toIndex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public static <T extends Comparable<T>> void sort(T[] array) {
+
+		T temp;
+		for (int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array.length; j++) {
+				if (array[i].compareTo(array[j]) == -1) {
+					temp = array[i];
+					array[i] = array[j];
+					array[j] = temp;
+				}
+			}
+		}
+
+	}
+
+	public static String toString(Object[] array) {
+		String result = "[";
+		for (int i = 0; i < array.length; i++) {
+			if (i == array.length - 1) {
+				result += String.format("%s]", array[i]);
+			} else {
+				result += String.format("%s,", array[i]);
+			}
+
+		}
+		return result;
 	}
 
 }

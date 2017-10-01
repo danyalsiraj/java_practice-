@@ -50,9 +50,18 @@ public class Person implements Comparable<Person> {
 
 		return -1;
 	}
-	
-	public String toString(){
-		return String.format("firstName: %s lastName:%s age:%s ", fName,lName,age);
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || !(o instanceof Person))
+			return false;
+		Person newPerson = (Person) o;
+		return (age == newPerson.age && fName.equals(newPerson.fName) && lName.equals(newPerson.lName));
+
+	}
+
+	public String toString() {
+		return String.format("firstName: %s lastName:%s age:%s ", fName, lName, age);
 	}
 
 }

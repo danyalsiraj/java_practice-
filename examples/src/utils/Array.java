@@ -249,21 +249,31 @@ public class Array<E> implements List<E> {
 			// shift by wont fit in current array
 			E[] temp = (E[]) new Object[array.length + shiftBy];
 			for (int i = 0; i < size() + shiftBy; i++) {
-				if (i <= index)
+				if (i < index)
 					temp[i] = array[i];
 				else {
 					temp[i + shiftBy] = array[i];
 				}
 			}
 			currentCapacity = temp.length;
-			temp = array;
+			array = temp;
 		} else {
 			// shifted elemets will fit in current array
-			for (int i = index; i < size() + shiftBy; i++) {
-				array[size() + shiftBy - i] = array[index + i];
-				array[index + i] = null;
-
+//			for (int i = index; i < size() + shiftBy; i++) {
+//				array[size() + shiftBy - i] = array[i];
+//				array[index + i] = null;
+//
+//			}
+			E[] temp = (E[]) new Object[array.length];
+			for (int i = 0; i < size() + shiftBy-1; i++) {
+				if (i < index)
+					temp[i] = array[i];
+				else {
+					temp[i + shiftBy] = array[i];
+				}
 			}
+			currentCapacity = size()+shiftBy;
+			array = temp;
 		}
 
 	}

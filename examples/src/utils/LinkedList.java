@@ -19,6 +19,10 @@ public class LinkedList<T> implements List<T> {
 			this.value = value;
 			this.next = next;
 		}
+		
+		public String toString() {
+			return value.toString();
+		}
 
 	}
 
@@ -90,6 +94,31 @@ public class LinkedList<T> implements List<T> {
 	@Override
 	public boolean remove(Object o) {
 		// TODO Auto-generated method stub
+
+		if (o == null) {
+			return false;
+		}
+		if (o.equals(header.value)) {
+			header = header.next;
+			size--;
+			return true;
+		}
+		Node<T> nodeBeforeObj = header;
+		while (nodeBeforeObj != null && nodeBeforeObj.next!=null) {
+			
+			if (nodeBeforeObj.next.value.equals(o)) {
+				nodeBeforeObj.next = nodeBeforeObj.next.next;
+				if (nodeBeforeObj.next == null) {
+					tail = nodeBeforeObj;
+				}
+				size--;
+				return true;
+
+			}
+			
+			nodeBeforeObj=nodeBeforeObj.next;
+
+		}
 		return false;
 	}
 
@@ -132,6 +161,9 @@ public class LinkedList<T> implements List<T> {
 	@Override
 	public T get(int index) {
 		// TODO Auto-generated method stub
+		if (index>=size){
+			throw new IndexOutOfBoundsException();
+		}
 		Node<T> tempNode = header;
 		for (int i = 0; i < index; i++) {
 			tempNode = tempNode.next;

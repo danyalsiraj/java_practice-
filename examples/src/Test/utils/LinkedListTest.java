@@ -1,6 +1,7 @@
 package Test.utils;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -28,8 +29,35 @@ public class LinkedListTest {
 		assertEquals("danyal", tester.remove(0));
 		assertEquals("size should be 1" ,1, tester.size());
 		
+	}
+	
+	@Test
+	public void removeObject(){
+		LinkedList<String> tester = new LinkedList<String>();
+		for (char i='a';i<='j';i++){
+			tester.add(""+i);
+		}
+		assertEquals("size should be 10" ,10, tester.size());
+		assertTrue(tester.remove("a"));
+		assertEquals("size should be 9" ,9, tester.size());
+		assertEquals("first element does not equal expected", "b", tester.get(0));
+		assertTrue(tester.remove("j"));
+		assertEquals("size should be 8" ,8, tester.size());
+		assertEquals("first element does not equal expected", "i", tester.get(7));
+		tester.add("c");
+		assertEquals("first element does not equal expected", "c", tester.get(8));
+		assertTrue(tester.remove("c"));
+		assertEquals("first element does not equal expected", "d", tester.get(1));
+		assertEquals("size should be 8" ,8, tester.size());
+		assertEquals("first element does not equal expected", "c", tester.get(7));
+		assertFalse(tester.remove("z"));
+		assertEquals("size should be 8" ,8, tester.size());
 
 
+
+		
+
+		
 	}
 
 }

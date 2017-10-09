@@ -14,6 +14,7 @@ import static org.junit.Assert.*;
 
 import utils.AStack;
 import utils.AStackV2;
+import utils.LStack;
 @RunWith(Parameterized.class)
 
 public class AStackTest {
@@ -21,7 +22,7 @@ public class AStackTest {
 	@Parameters
 	public static Class[] data(){
 		
-		return new Class[]{AStack.class,AStackV2.class};
+		return new Class[]{AStack.class,AStackV2.class,LStack.class};
 		
 	}
 	@Parameter

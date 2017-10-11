@@ -7,15 +7,15 @@ import java.util.ListIterator;
 
 public class LinkedList<T> implements List<T> {
 
-	public class Node<T> {
+	public class Node {
 		T value;
-		Node<T> next;
+		Node next;
 
 		public Node(T value) {
 			this.value = value;
 		}
 
-		public Node(T value, Node<T> next) {
+		public Node(T value, Node next) {
 			this.value = value;
 			this.next = next;
 		}
@@ -26,7 +26,7 @@ public class LinkedList<T> implements List<T> {
 
 	}
 
-	Node<T> header, tail;
+	Node header, tail;
 
 	int size;
 
@@ -45,7 +45,7 @@ public class LinkedList<T> implements List<T> {
 	@Override
 	public boolean contains(Object o) {
 		// TODO Auto-generated method stub
-		Node<T> tempNode = header;
+		Node tempNode = header;
 		while (tempNode != null) {
 			if (tempNode.value.equals(o)) {
 				return true;
@@ -76,9 +76,9 @@ public class LinkedList<T> implements List<T> {
 	@Override
 	public boolean add(T e) {
 		// TODO Auto-generated method stub
-		Node<T> node = new Node<T>(e);
+		Node node = new Node(e);
 		if (size == 0) {
-			// Node<T> node=new Node<T>(e);
+			// Node node=new Node(e);
 			header = node;
 			tail = node;
 			size++;
@@ -103,7 +103,7 @@ public class LinkedList<T> implements List<T> {
 			size--;
 			return true;
 		}
-		Node<T> nodeBeforeObj = header;
+		Node nodeBeforeObj = header;
 		while (nodeBeforeObj != null && nodeBeforeObj.next != null) {
 
 			if (nodeBeforeObj.next.value.equals(o)) {
@@ -164,7 +164,7 @@ public class LinkedList<T> implements List<T> {
 		if (index >= size) {
 			throw new IndexOutOfBoundsException();
 		}
-		Node<T> tempNode = header;
+		Node tempNode = header;
 		for (int i = 0; i < index; i++) {
 			tempNode = tempNode.next;
 
@@ -181,8 +181,8 @@ public class LinkedList<T> implements List<T> {
 		if (element == null) {
 			throw new IllegalArgumentException("element is null");
 		}
-		Node<T> nodeBeforeIndex = header;
-		Node<T> newNode = new Node<T>(element);
+		Node nodeBeforeIndex = header;
+		Node newNode = new Node(element);
 		T value;
 		if (index == 0) {
 			value = header.value;
@@ -212,8 +212,8 @@ public class LinkedList<T> implements List<T> {
 		if (element == null) {
 			throw new IllegalArgumentException("element is null");
 		}
-		Node<T> nodeBeforeIndex = header;
-		Node<T> newNode = new Node<T>(element);
+		Node nodeBeforeIndex = header;
+		Node newNode = new Node(element);
 		if (index == 0) {
 			newNode.next = header;
 			header = newNode;
@@ -238,13 +238,13 @@ public class LinkedList<T> implements List<T> {
 			size--;
 			return value;
 		}
-		Node<T> nodeBeforeIndex = header;
+		Node nodeBeforeIndex = header;
 
 		for (int i = 0; i < index - 1; i++) {
 			nodeBeforeIndex = nodeBeforeIndex.next;
 		}
 
-		Node<T> nodeToBeRemoved = nodeBeforeIndex.next;
+		Node nodeToBeRemoved = nodeBeforeIndex.next;
 		T value = nodeToBeRemoved.value;
 
 		nodeBeforeIndex.next = nodeToBeRemoved.next;

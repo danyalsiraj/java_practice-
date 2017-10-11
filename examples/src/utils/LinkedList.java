@@ -19,7 +19,7 @@ public class LinkedList<T> implements List<T> {
 			this.value = value;
 			this.next = next;
 		}
-		
+
 		public String toString() {
 			return value.toString();
 		}
@@ -104,8 +104,8 @@ public class LinkedList<T> implements List<T> {
 			return true;
 		}
 		Node<T> nodeBeforeObj = header;
-		while (nodeBeforeObj != null && nodeBeforeObj.next!=null) {
-			
+		while (nodeBeforeObj != null && nodeBeforeObj.next != null) {
+
 			if (nodeBeforeObj.next.value.equals(o)) {
 				nodeBeforeObj.next = nodeBeforeObj.next.next;
 				if (nodeBeforeObj.next == null) {
@@ -115,8 +115,8 @@ public class LinkedList<T> implements List<T> {
 				return true;
 
 			}
-			
-			nodeBeforeObj=nodeBeforeObj.next;
+
+			nodeBeforeObj = nodeBeforeObj.next;
 
 		}
 		return false;
@@ -161,7 +161,7 @@ public class LinkedList<T> implements List<T> {
 	@Override
 	public T get(int index) {
 		// TODO Auto-generated method stub
-		if (index>=size){
+		if (index >= size) {
 			throw new IndexOutOfBoundsException();
 		}
 		Node<T> tempNode = header;
@@ -175,12 +175,57 @@ public class LinkedList<T> implements List<T> {
 	@Override
 	public T set(int index, T element) {
 		// TODO Auto-generated method stub
-		return null;
+		if (index >= size()) {
+			throw new IndexOutOfBoundsException();
+		}
+		if (element == null) {
+			throw new IllegalArgumentException("element is null");
+		}
+		Node<T> nodeBeforeIndex = header;
+		Node<T> newNode = new Node<T>(element);
+		T value;
+		if (index == 0) {
+			value = header.value;
+			newNode.next = header.next;
+			header = newNode;
+			return value;
+		}
+		for (int i = 1; i < index; i++) {
+			nodeBeforeIndex = nodeBeforeIndex.next;
+		}
+		value = nodeBeforeIndex.next.value;
+		newNode.next = nodeBeforeIndex.next.next;
+		nodeBeforeIndex.next = newNode;
+		if (newNode.next == null) {
+			tail = newNode;
+		}
+
+		return value;
 	}
 
 	@Override
 	public void add(int index, T element) {
 		// TODO Auto-generated method stub
+		if (index >= size()) {
+			throw new IndexOutOfBoundsException();
+		}
+		if (element == null) {
+			throw new IllegalArgumentException("element is null");
+		}
+		Node<T> nodeBeforeIndex = header;
+		Node<T> newNode = new Node<T>(element);
+		if (index == 0) {
+			newNode.next = header;
+			header = newNode;
+
+		} else {
+			for (int i = 1; i < index; i++) {
+				nodeBeforeIndex = nodeBeforeIndex.next;
+			}
+			newNode.next = nodeBeforeIndex.next;
+			nodeBeforeIndex.next = newNode;
+		}
+		size++;
 
 	}
 

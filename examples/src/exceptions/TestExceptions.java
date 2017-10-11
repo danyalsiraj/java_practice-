@@ -6,6 +6,7 @@ public class TestExceptions {
 		try {
 			testExc();
 			System.out.println("asdasd sdas adsd");
+
 		} catch (UnsupportedOperationException e) {
 			e.printStackTrace();
 			System.out.println("caught");

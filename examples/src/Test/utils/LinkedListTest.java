@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Iterator;
+
 import org.junit.Test;
 
 import person.Person;
@@ -95,6 +97,23 @@ public class LinkedListTest {
 		assertEquals("returned element should be b", "b", tester.get(2));
 		assertEquals("returned element should be c", "c", tester.get(4));
 
+	}
+	
+	@Test 
+	public void itteratorTest(){
+		LinkedList<String> tester = new LinkedList<String>();
+		for (char i = 'a'; i <= 'j'; i++) {
+			tester.add("" + i);
+		}
+		Iterator<String> testIterator= tester.iterator();
+		for (char i = 'a'; i <= 'j'; i++) {
+			assertTrue("it does not have next value",testIterator.hasNext());
+			assertEquals(""+i, testIterator.next());
+		}
+		assertFalse("it has a next value",testIterator.hasNext());
+
+		
+		
 	}
 
 }

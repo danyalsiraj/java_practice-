@@ -26,6 +26,37 @@ public class LinkedList<T> implements List<T> {
 
 	}
 
+	int modCount;
+
+	public class ListItterator implements Iterator<T> {
+
+		int expectedModCount;
+
+		public ListItterator() {
+			// TODO Auto-generated constructor stub
+			expectedModCount = modCount;
+		}
+
+		Node track = new Node(null, header);
+
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return track.next != null;
+		}
+
+		@Override
+		public T next() {
+			// TODO Auto-generated method stub
+			if (track.next == null) {
+				throw new NullPointerException();
+			}
+			track = track.next;
+			return track.value;
+		}
+
+	}
+
 	Node header, tail;
 
 	int size;
@@ -58,7 +89,7 @@ public class LinkedList<T> implements List<T> {
 	@Override
 	public Iterator<T> iterator() {
 		// TODO Auto-generated method stub
-		return null;
+		return new ListItterator();
 	}
 
 	@Override

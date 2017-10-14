@@ -2,6 +2,7 @@ package examples;
 
 public class PascalTri {
 //value at nth row and rth column n!/(r!*(n-r)!)
+	
 	public static void pascalTri(int nthRow){
 		pascalTri(nthRow,0);
 	}
@@ -14,10 +15,11 @@ public class PascalTri {
 
 	}
 	public static void calculateColumnValueInRow(int row){
-		System.out.println("");
 		for (int i=0;i<=row;i++){
 			System.out.print(+factorial(row)/(factorial(i)*factorial(row-i))+" ");
 		}
+		System.out.println("");
+
 		
 	}
 	public static void main(String[] args) {

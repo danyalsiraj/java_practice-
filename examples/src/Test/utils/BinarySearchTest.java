@@ -1,11 +1,11 @@
 package Test.utils;
 
-import utils.BinarySearch;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import utils.BinarySearch;
 
 public class BinarySearchTest {
 
@@ -25,7 +25,6 @@ public class BinarySearchTest {
 		assertTrue("it does not have the value", BinarySearch.hasValue(array, 1));
 		assertTrue("it does not have the value", BinarySearch.hasValue(array, 8));
 		assertFalse("it has the value", BinarySearch.hasValue(array, 12));
-
 
 	}
 

@@ -1,6 +1,8 @@
 package utils;
 
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
@@ -34,15 +36,12 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 		if (root == null) {
 			return 0;
 		}
-		int leftSize = size(root.left);
-
-		int rightSize = size(root.right);
 
 		/*
 		 * add 1 because we always want to count the current node (root) if its
 		 * not empty
 		 */
-		return leftSize + rightSize + 1;
+		return size(root.left) + size(root.right) + 1;
 	}
 
 	public int depth() {
@@ -92,9 +91,51 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
 	}
 
+	public Queue<T> printInOrder() {
+		Queue<T> result = new LinkedList<T>();
+		printInOrder(root, result);
+		return result;
+
+	}
+
+	private void printInOrder(Node root, Queue<T> printQueue) {
+		if (root == null) {
+			return;
+		}
+
+		// print left
+		printInOrder(root.left, printQueue);
+		// print current
+		// System.out.println(root.value);
+		printQueue.add(root.value);
+		// print right side
+		printInOrder(root.right, printQueue);
+
+	}
+
 	@Override
 	public void removeAll() {
 		// TODO Auto-generated method stub
+
+	}
+
+	public class InOrderIterator<T> implements Iterator<T> {
+
+		public InOrderIterator() {
+
+		}
+
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public T next() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
 	}
 
@@ -132,14 +173,16 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 	public boolean add(T value) {
 		if (value == null)
 			return false;
+		if (this.root == null) {
+			this.root = new Node(value);
+			return true;
+		}
 		return add(root, value);
 	}
 
 	private boolean add(Node root, T value) {
 		// TODO Auto-generated method stub
-		if (root.value == null) {
-			root.value = value;
-		}
+
 		switch (value.compareTo(root.value)) {
 			case 1:
 				if (root.right == null) {

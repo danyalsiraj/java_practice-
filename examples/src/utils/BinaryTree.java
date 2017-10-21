@@ -165,8 +165,75 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
 	@Override
 	public boolean remove(T element) {
-		// TODO Auto-generated method stub
+		if (element == null || root == null) {
+			return false;
+		}
+		if (root.value.compareTo(element) == 0) {
+
+			root = removeTopMost(root);
+			return true;
+
+		}
+		remove(element, root);
 		return false;
+
+	}
+
+	public boolean remove(T element, Node root) {
+		// TODO Auto-generated method stub
+		if (root == null) {
+			return false;
+		}
+		switch (root.value.compareTo(element)) {
+			case 1:
+				if (root.right != null && root.right.value.compareTo(element) == 0) {
+					root.right = removeTopMost(root.right);
+					return true;
+				}
+				root = root.right;
+				return remove(element, root);
+			case -1:
+				if (root.left != null && root.left.value.compareTo(element) == 0) {
+					root.left = removeTopMost(root.left);
+					return true;
+				}
+				root = root.left;
+				return remove(element, root);
+
+		}
+
+		return false;
+	}
+
+	private Node removeTopMost(Node root) {
+		if (root.right == null) {
+			root = root.left;
+		} else if (root.left == null) {
+			root = root.right;
+		} else {
+			// case when root has left AND right
+			// replace with right most value of left subtree
+
+			if (root.left.right == null) {
+				root.left.right = root.right;
+				root = root.left;
+			} else {
+				root.value = removeRightMostNode(root.left);
+			}
+
+		}
+		return root;
+	}
+
+	private T removeRightMostNode(Node root) {
+
+		if (root.right.right == null) {
+			T value = root.right.value;
+			root.right = root.right.left;
+			return value;
+		}
+
+		return removeRightMostNode(root.right);
 	}
 
 	@Override

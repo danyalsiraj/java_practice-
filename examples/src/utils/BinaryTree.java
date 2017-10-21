@@ -3,6 +3,7 @@ package utils;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
@@ -119,22 +120,146 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
 	}
 
-	public class InOrderIterator<T> implements Iterator<T> {
+	public class InOrderIterator implements Iterator<T> {
+
+		Stack<Node> inOrderStack = new Stack<Node>();
 
 		public InOrderIterator() {
+			Node currentNode = root;
+			while (currentNode != null) {
+				inOrderStack.push(currentNode);
+				currentNode = currentNode.left;
+			}
 
 		}
 
 		@Override
 		public boolean hasNext() {
 			// TODO Auto-generated method stub
-			return false;
+			return !inOrderStack.isEmpty();
 		}
 
 		@Override
 		public T next() {
 			// TODO Auto-generated method stub
-			return null;
+			Node nextNode = inOrderStack.pop();
+			Node returnNode = nextNode.right;
+			while (returnNode != null) {
+				inOrderStack.push(returnNode);
+				returnNode = returnNode.left;
+			}
+			return nextNode.value;
+		}
+
+	}
+
+	public class PreOrderIterator implements Iterator<T> {
+
+		Stack<Node> preOrderQueue = new Stack<Node>();
+
+		public PreOrderIterator() {
+			Node currentNode = root;
+			if (currentNode != null)
+				preOrderQueue.push(currentNode);
+		}
+
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return !preOrderQueue.isEmpty();
+		}
+
+		@Override
+		public T next() {
+			// TODO Auto-generated method stub
+			Node nextNode = preOrderQueue.pop();
+			if (nextNode.right != null) {
+				preOrderQueue.push(nextNode.right);
+			}
+			if (nextNode.left != null) {
+				preOrderQueue.push(nextNode.left);
+			}
+			return nextNode.value;
+		}
+
+	}
+
+	public class PostOrderIterator implements Iterator<T> {
+
+		Stack<Node> postOrderStack = new Stack<Node>();
+		T lastValPoped = null;
+
+		public PostOrderIterator() {
+			Node currentNode = root;
+			while (currentNode != null) {
+				postOrderStack.push(currentNode);
+				currentNode = currentNode.left;
+			}
+
+		}
+
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return !postOrderStack.isEmpty();
+		}
+
+		@Override
+		public T next() {
+			// TODO Auto-generated method stub
+			Node nextNode = postOrderStack.peek();
+			T result = null;
+			if (lastValPoped == null || nextNode.value.compareTo(lastValPoped) == -1 || nextNode.right == null) {
+				nextNode = postOrderStack.pop();
+				result = nextNode.value;
+			} else {
+				// add all left elements of right subtree of current element,
+				// same as inOrder
+				nextNode = nextNode.right;
+				while (nextNode != null && nextNode.left != null) {
+					postOrderStack.push(nextNode);
+
+					nextNode = nextNode.left;
+				}
+				result = nextNode.value;
+			}
+
+			lastValPoped = result;
+			return lastValPoped;
+		}
+
+	}
+
+	public class LevelOrderIterator implements Iterator<T> {
+
+		Queue<Node> levelOrderStack = new LinkedList<Node>();
+
+		public LevelOrderIterator() {
+			if (root != null) {
+				Node currentNode = root;
+				levelOrderStack.add(currentNode);
+			}
+
+		}
+
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return !levelOrderStack.isEmpty();
+		}
+
+		@Override
+		public T next() {
+			// TODO Auto-generated method stub
+			Node nextNode = levelOrderStack.remove();
+
+			if (nextNode.left != null) {
+				levelOrderStack.add(nextNode.left);
+			}
+			if (nextNode.right != null) {
+				levelOrderStack.add(nextNode.right);
+			}
+			return nextNode.value;
 		}
 
 	}
@@ -142,25 +267,26 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 	@Override
 	public Iterator<T> iteratorInOrder() {
 		// TODO Auto-generated method stub
-		return null;
+		return new InOrderIterator();
+
 	}
 
 	@Override
 	public Iterator<T> iteratorPreOrder() {
 		// TODO Auto-generated method stub
-		return null;
+		return new PreOrderIterator();
 	}
 
 	@Override
 	public Iterator<T> iteratorPostOrder() {
 		// TODO Auto-generated method stub
-		return null;
+		return new PostOrderIterator();
 	}
 
 	@Override
 	public Iterator<T> iteratorLevelOrder() {
 		// TODO Auto-generated method stub
-		return null;
+		return new LevelOrderIterator();
 	}
 
 	@Override

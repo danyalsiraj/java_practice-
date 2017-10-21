@@ -174,8 +174,7 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 			return true;
 
 		}
-		remove(element, root);
-		return false;
+		return remove(element, root);
 
 	}
 
@@ -185,14 +184,14 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 			return false;
 		}
 		switch (root.value.compareTo(element)) {
-			case 1:
+			case -1:
 				if (root.right != null && root.right.value.compareTo(element) == 0) {
 					root.right = removeTopMost(root.right);
 					return true;
 				}
 				root = root.right;
 				return remove(element, root);
-			case -1:
+			case 1:
 				if (root.left != null && root.left.value.compareTo(element) == 0) {
 					root.left = removeTopMost(root.left);
 					return true;

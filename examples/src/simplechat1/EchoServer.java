@@ -68,6 +68,9 @@ public class EchoServer extends AbstractServer {
 		System.out.println("Server has stopped listening for connections.");
 	}
 
+	protected void serverClosed() {
+		System.out.println("Server closed");
+	}
 	// Class methods ***************************************************
 
 	/**
@@ -78,6 +81,21 @@ public class EchoServer extends AbstractServer {
 	 *            The port number to listen on. Defaults to 5555 if no argument
 	 *            is entered.
 	 */
+
+	protected void clientConnected(ConnectionToClient client) {
+		sendToAllClients("Cliend Connected");
+	}
+
+	synchronized protected void clientDisconnected(ConnectionToClient client) {
+		sendToAllClients("Cliend Disconnected");
+
+	}
+
+	synchronized protected void clientException(ConnectionToClient client, Throwable exception) {
+		sendToAllClients("Cliend Disconnected due to exception: " + exception.getMessage());
+
+	}
+
 	public static void main(String[] args) {
 		int port = 0; // Port to listen on
 

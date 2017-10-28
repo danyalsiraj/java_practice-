@@ -24,7 +24,7 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 	@Override
 	public boolean isEmpty() {
 		// TODO Auto-generated method stub
-		return root != null;
+		return root == null;
 	}
 
 	@Override

@@ -66,7 +66,46 @@ public class ChatClient extends AbstractClient {
 	 */
 	public void handleMessageFromClientUI(String message) {
 		try {
-			sendToServer(message);
+			switch (message) {
+				case "#quit":
+					quit();
+					break;
+				case "#logOff":
+					closeConnection();
+					break;
+				case "#sethost":
+					if (!isConnected()) {
+						String host = clientUI.scan("Enter the Host");
+						setHost(host);
+					} else {
+						clientUI.display("you need to logout to set the host");
+					}
+					break;
+				case "#setport":
+					if (!isConnected()) {
+						int port = Integer.parseInt(clientUI.scan("Enter the port"));
+						setPort(port);
+					} else {
+						clientUI.display("you need to logout to set the port");
+					}
+					break;
+				case "#login":
+					if (!isConnected()) {
+						openConnection();
+					} else {
+						clientUI.display("you are already connected");
+					}
+					break;
+				case "#gethost":
+					clientUI.display(getHost());
+					break;
+				case "#getport":
+					clientUI.display(getPort() + "");
+					break;
+				default:
+					sendToServer(message);
+			}
+
 		} catch (IOException e) {
 			clientUI.display("Could not send message to server.  Terminating client.");
 			quit();
@@ -87,7 +126,6 @@ public class ChatClient extends AbstractClient {
 	@Override
 	protected void connectionClosed() {
 		clientUI.display("Server has been shut down");
-		quit();
 	}
 
 	protected void connectionException(Exception exception) {

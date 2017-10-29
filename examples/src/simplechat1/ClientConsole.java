@@ -7,6 +7,7 @@ package simplechat1;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 
 import simplechat1.client.ChatClient;
 import simplechat1.common.ChatIF;
@@ -84,6 +85,12 @@ public class ClientConsole implements ChatIF {
 	 */
 	public void display(String message) {
 		System.out.println("> " + message);
+	}
+
+	public String scan(String prompt) {
+		display(prompt);
+		Scanner scan = new Scanner(System.in);
+		return scan.nextLine();
 	}
 
 	// Class methods ***************************************************

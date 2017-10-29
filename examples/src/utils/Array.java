@@ -5,10 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import javax.activation.UnsupportedDataTypeException;
-
-import com.mysql.jdbc.integration.jboss.ExtendedMysqlExceptionSorter;
-
 public class Array<E> implements List<E> {
 
 	private E[] array;
@@ -97,17 +93,22 @@ public class Array<E> implements List<E> {
 	}
 
 	private void extend() {
-		extend(size() * 2);
+		array = (E[]) extend(array, new Object[size() * 2]);
 
 	}
 
 	private void extend(int length) {
-		E[] temp = (E[]) new Object[length];
+		array = (E[]) extend(array, new Object[length]);
 
-		for (int i = 0; i < size(); i++) {
-			temp[i] = array[i];
+	}
+
+	protected static <T> T[] extend(T[] array, T[] dest) {
+
+		for (int i = 0; i < array.length; i++) {
+			dest[i] = array[i];
 		}
-		array = temp;
+		array = dest;
+		return array;
 	}
 
 	@Override
@@ -259,20 +260,15 @@ public class Array<E> implements List<E> {
 			array = temp;
 		} else {
 			// shifted elemets will fit in current array
-//			for (int i = index; i < size() + shiftBy; i++) {
-//				array[size() + shiftBy - i] = array[i];
-//				array[index + i] = null;
-//
-//			}
 			E[] temp = (E[]) new Object[array.length];
-			for (int i = 0; i < size() + shiftBy-1; i++) {
+			for (int i = 0; i < size() + shiftBy - 1; i++) {
 				if (i < index)
 					temp[i] = array[i];
 				else {
 					temp[i + shiftBy] = array[i];
 				}
 			}
-			currentCapacity = size()+shiftBy;
+			currentCapacity = size() + shiftBy;
 			array = temp;
 		}
 
@@ -280,16 +276,22 @@ public class Array<E> implements List<E> {
 
 	@Override
 	public E remove(int index) {
+		currentCapacity--;
+		return remove(index, array);
+
+	}
+
+	public static <T> T remove(int index, T[] array) {
 		// TODO Auto-generated method stub
-		E previousElement = array[index];
-		for (int n = index; n < size(); n++) {
-			array[n] = array[n + 1];
+		T previousElement = array[index];
+		for (int n = index; n < array.length; n++) {
+			array[n] = n + 1 >= array.length ? null : array[n + 1];
 
 		}
 		// dont need to set the last value null because the it copies
 		// the null at the last value. the list never gets full because
 		// we always extend it.
-		currentCapacity--;
+		// currentCapacity--;
 		return previousElement;
 	}
 

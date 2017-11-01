@@ -6,15 +6,17 @@ public class Staircase {
 
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
-		staricase(scan.nextInt());
+		staricase(scan.nextInt(), 1);
 
 	}
 
-	public static void staricase(int n) {
+	public static void staricase(int n, int i) {
 
-		for (int i = 1; i <= n; i++) {
-			System.out.println(addSpace(n - i, steps(i, "")));
+		if (i > n) {
+			return;
 		}
+		System.out.println(addSpace(n - i, steps(i, "")));
+		staricase(n, ++i);
 
 	}
 

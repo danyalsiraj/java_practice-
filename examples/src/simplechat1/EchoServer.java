@@ -83,11 +83,11 @@ public class EchoServer extends AbstractServer {
 	 */
 
 	protected void clientConnected(ConnectionToClient client) {
-		sendToAllClients("Cliend Connected");
+		sendToAllClients("Client Connected");
 	}
 
 	synchronized protected void clientDisconnected(ConnectionToClient client) {
-		sendToAllClients("Cliend Disconnected");
+		sendToAllClients("Client Disconnected");
 
 	}
 
@@ -96,22 +96,5 @@ public class EchoServer extends AbstractServer {
 
 	}
 
-	public static void main(String[] args) {
-		int port = 0; // Port to listen on
-
-		try {
-			port = Integer.parseInt(args[0]); // Get port from command line
-		} catch (Throwable t) {
-			port = DEFAULT_PORT; // Set port to 5555
-		}
-
-		EchoServer sv = new EchoServer(port);
-
-		try {
-			sv.listen(); // Start listening for connections
-		} catch (Exception ex) {
-			System.out.println("ERROR - Could not listen for clients!");
-		}
-	}
 }
 // End of EchoServer class

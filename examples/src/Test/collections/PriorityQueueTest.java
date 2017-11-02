@@ -1,11 +1,11 @@
-package Test.utils;
+package Test.collections;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import utils.APriorityQueue;
-import utils.IPriorityQueue;
+import collections.APriorityQueue;
+import collections.IPriorityQueue;
 
 public class PriorityQueueTest {
 	@Test

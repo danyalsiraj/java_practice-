@@ -1,23 +1,18 @@
-package utils;
+package collections;
 
 import java.util.Collection;
 import java.util.Deque;
 import java.util.Iterator;
+import java.util.Stack;
 
-public class LStack<T> implements Deque<T> {
-	public class Node {
-
-		Node prev;
-		T value;
-
-		public Node(T value) {
-			this.value = value;
-		}
-
+public class AStack<T> implements Deque<T> {
+	private T[] array;
+	private final static int DEFAULT_SIZE = 10;
+	private int currentCapacity;
+	
+	public AStack(){
+		array=(T[]) new Object[DEFAULT_SIZE];
 	}
-
-	int size;
-	Node header, tail;
 
 	@Override
 	public boolean isEmpty() {
@@ -184,7 +179,7 @@ public class LStack<T> implements Deque<T> {
 	@Override
 	public T peek() {
 		// TODO Auto-generated method stub
-		return header.value;
+		return array[size() - 1];
 	}
 
 	@Override
@@ -193,21 +188,27 @@ public class LStack<T> implements Deque<T> {
 		if (e == null) {
 			return;
 		}
+		if (array.length == size()) {
+			extend();
+		}
+		array[size()] = e;
+		currentCapacity++;
 
-		Node previousHeader = header;
-		header = new Node(e);
-		header.prev = previousHeader;
-		size++;
+	}
 
+	public void extend() {
+		T[] temp = (T[]) new Object[size() * 2];
+		System.arraycopy(array, 0, temp, 0, size());
+		array = temp;
 	}
 
 	@Override
 	public T pop() {
 		// TODO Auto-generated method stub
-		Node previous=header;
-		header=header.prev;
-		size--;
-		return previous.value;
+		T element = peek();
+		array[size() - 1] = null;
+		currentCapacity--;
+		return element;
 	}
 
 	@Override
@@ -225,7 +226,7 @@ public class LStack<T> implements Deque<T> {
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub
-		return size;
+		return currentCapacity;
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package weeklyCodingChallange;
 
 import java.util.Iterator;
 
-import utils.BinaryTree;
+import collections.BinaryTree;
 
 public class KthSmallestNode {
 

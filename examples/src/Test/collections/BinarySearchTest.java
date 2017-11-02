@@ -1,11 +1,11 @@
-package Test.utils;
+package Test.collections;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import utils.BinarySearch;
+import collections.BinarySearch;
 
 public class BinarySearchTest {
 

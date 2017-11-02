@@ -1,4 +1,4 @@
-package Test.utils;
+package Test.collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -8,9 +8,9 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
+import collections.Array;
+import collections.LinkedList;
 import person.Person;
-import utils.Array;
-import utils.LinkedList;
 
 public class LinkedListTest {
 	@Test

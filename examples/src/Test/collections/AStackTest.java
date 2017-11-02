@@ -1,4 +1,4 @@
-package Test.utils;
+package Test.collections;
 
 import java.util.Collection;
 import java.util.Deque;
@@ -10,11 +10,11 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import static org.junit.Assert.*;
+import collections.AStack;
+import collections.AStackV2;
+import collections.LStack;
 
-import utils.AStack;
-import utils.AStackV2;
-import utils.LStack;
+import static org.junit.Assert.*;
 @RunWith(Parameterized.class)
 
 public class AStackTest {

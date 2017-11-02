@@ -1,4 +1,4 @@
-package Test.utils;
+package Test.collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,7 +10,7 @@ import java.util.Queue;
 
 import org.junit.Test;
 
-import utils.BinaryTree;
+import collections.BinaryTree;
 
 public class BinartTreeTest {
 

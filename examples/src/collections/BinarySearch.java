@@ -1,4 +1,4 @@
-package utils;
+package collections;
 
 public class BinarySearch {
 

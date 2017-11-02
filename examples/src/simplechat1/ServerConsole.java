@@ -33,7 +33,7 @@ public class ServerConsole implements ChatIF {
 
 			while (true) {
 				message = fromConsole.readLine();
-				server.sendToAllClients(message);
+				server.sendToAllClients("Server Msg> " + message);
 			}
 		} catch (Exception ex) {
 			System.out.println("Unexpected error while reading from console!");

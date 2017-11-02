@@ -1,6 +1,6 @@
 package person;
 
-import utils.Array;
+import collections.Array;
 
 public class TestPerson {
 

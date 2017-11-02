@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import utils.BinaryTree;
+import collections.BinaryTree;
 import weeklyCodingChallange.KthSmallestNode;
 
 public class KthSmallestNodeTest {

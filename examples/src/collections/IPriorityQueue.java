@@ -8,7 +8,7 @@ public interface IPriorityQueue<T> extends Queue<T> {
 		add(value);
 	}
 
-	public default T findMax() {
+	public default T findMin() {
 		return peek();
 	}
 

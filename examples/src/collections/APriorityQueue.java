@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 public class APriorityQueue<T extends Comparable<T>> implements IPriorityQueue<T> {
 	int size = 0;
-	int maxIndex = 0;
+	int minIndex = 0;
 	T[] queueArray;
 
 	public APriorityQueue() {
@@ -32,8 +32,8 @@ public class APriorityQueue<T extends Comparable<T>> implements IPriorityQueue<T
 		}
 
 		queueArray[size] = e;
-		if (queueArray[size].compareTo(queueArray[maxIndex]) > 0) {
-			maxIndex = size;
+		if (queueArray[size].compareTo(queueArray[minIndex]) < 0) {
+			minIndex = size;
 		}
 		size++;
 
@@ -49,18 +49,18 @@ public class APriorityQueue<T extends Comparable<T>> implements IPriorityQueue<T
 	@Override
 	public T remove() {
 		// TODO Auto-generated method stub
-		T maxValue = Array.remove(maxIndex, queueArray);
+		T maxValue = Array.remove(minIndex, queueArray);
 		size--;
-		findNextMax();
+		findNextMin();
 		return maxValue;
 	}
 
-	private void findNextMax() {
+	private void findNextMin() {
 		// TODO Auto-generated method stub
-		maxIndex = 0;
+		minIndex = 0;
 		for (int i = 0; i < size; i++) {
-			if (queueArray[maxIndex].compareTo(queueArray[i]) == -1) {
-				maxIndex = i;
+			if (queueArray[minIndex].compareTo(queueArray[i]) > 0) {
+				minIndex = i;
 			}
 		}
 
@@ -81,7 +81,7 @@ public class APriorityQueue<T extends Comparable<T>> implements IPriorityQueue<T
 	@Override
 	public T peek() {
 		// TODO Auto-generated method stub
-		return queueArray[maxIndex];
+		return queueArray[minIndex];
 
 	}
 

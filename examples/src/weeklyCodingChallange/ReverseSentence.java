@@ -1,20 +1,25 @@
 package weeklyCodingChallange;
 
+import java.util.Scanner;
+import java.util.Stack;
+
 public class ReverseSentence {
 
 	public static String reverse(String sentence) {
 		if (sentence == null || sentence.length() < 2) {
 			return sentence;
 		}
-		String[] reverse = sentence.split(" ");
-
+		Scanner scan = new Scanner(sentence);
+		Stack<String> reverseStack = new Stack<String>();
 		StringBuffer reverseSent = new StringBuffer(sentence.length());
-		for (int i = reverse.length - 1; i >= 0; i--) {
-			reverseSent.append(reverse[i]);
-			if (i > 0) {
+		while (scan.hasNext()) {
+			reverseStack.push(scan.next());
+		}
+		while (!reverseStack.isEmpty()) {
+			reverseSent.append(reverseStack.pop());
+			if (!reverseStack.isEmpty()) {
 				reverseSent.append(" ");
 			}
-
 		}
 		return reverseSent.toString();
 

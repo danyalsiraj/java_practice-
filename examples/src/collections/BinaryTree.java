@@ -11,12 +11,16 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
 		Node left;
 		Node right;
+		Node parent;
 		T value;
 
 		public Node(T value) {
 			this.value = value;
 		}
 
+		public String toString() {
+			return String.format("V: %s", value);
+		}
 	}
 
 	Node root;
@@ -45,23 +49,22 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 		return size(root.left) + size(root.right) + 1;
 	}
 
-	public int depth() {
-		return depthOfTree(root);
+	public int height() {
+		return heightOfTree(root);
 	}
 
-	private int depthOfTree(Node root) {
+	protected int heightOfTree(Node root) {
 		if (root == null)
 			return 0;
 
-		int leftDepth = depthOfTree(root.left);
+		int leftDepth = heightOfTree(root.left);
 
-		int rightDepth = depthOfTree(root.right);
+		int rightDepth = heightOfTree(root.right);
 
 		int maxOf2 = Math.max(leftDepth, rightDepth);
 
-		if (root.left != null || root.right != null) {
-			maxOf2 += 1;
-		}
+		maxOf2 += 1;
+
 		return maxOf2;
 
 	}
@@ -363,23 +366,31 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
 	@Override
 	public boolean add(T value) {
-		if (value == null)
-			return false;
-		if (this.root == null) {
-			this.root = new Node(value);
-			return true;
-		}
-		return add(root, value);
+
+		return addNode(value) != null;
+
 	}
 
-	private boolean add(Node root, T value) {
+	protected Node addNode(T value) {
+		if (value == null)
+			return null;
+		if (this.root == null) {
+			this.root = new Node(value);
+			return root;
+		} else {
+			return add(root, value);
+		}
+	}
+
+	protected Node add(Node root, T value) {
 		// TODO Auto-generated method stub
 
 		switch (value.compareTo(root.value)) {
 			case 1:
 				if (root.right == null) {
 					root.right = new Node(value);
-					return true;
+					root.right.parent = root;
+					return root.right;
 				}
 				root = root.right;
 				break;
@@ -387,7 +398,8 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 			default:// add to left if the value already exists
 				if (root.left == null) {
 					root.left = new Node(value);
-					return true;
+					root.left.parent = root;
+					return root.left;
 				}
 				root = root.left;
 				break;

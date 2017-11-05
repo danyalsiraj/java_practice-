@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import collections.BinaryTree;
 
-public class BinartTreeTest {
+public class BinaryTreeTest {
 
 	@Test
 	public void printInOrderTest() {

@@ -6,7 +6,7 @@ public interface IBinaryTree<T extends Comparable<T>> {
 
 	public boolean isEmpty();
 	public int size();
-	public int depth();
+	public int height();
 	public boolean contains(T value);
 	public void removeAll();
 	public Iterator<T> iteratorInOrder();

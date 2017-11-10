@@ -293,44 +293,62 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 	}
 
 	@Override
-	public boolean remove(T element) {
+	public boolean remove(T value) {
+
+		return removeNode(value) != null;
+
+	}
+
+	public Node removeNode(T element) {
 		if (element == null || root == null) {
-			return false;
+			return null;
 		}
 		if (root.value.compareTo(element) == 0) {
 
 			root = removeTopMost(root);
-			return true;
+			if (root != null) {
+				root.parent = null;
+			}
+
+			return root;
 
 		}
 		return remove(element, root);
 
 	}
 
-	public boolean remove(T element, Node root) {
+	public Node remove(T element, Node root) {
 		// TODO Auto-generated method stub
 		if (root == null) {
-			return false;
+			return root;
 		}
 		switch (root.value.compareTo(element)) {
 			case -1:
 				if (root.right != null && root.right.value.compareTo(element) == 0) {
+					Node removedNode = root.right;
 					root.right = removeTopMost(root.right);
-					return true;
+					if (root.right != null) {
+						root.right.parent = root;
+					}
+					return removedNode;
 				}
 				root = root.right;
 				return remove(element, root);
 			case 1:
 				if (root.left != null && root.left.value.compareTo(element) == 0) {
+					Node removedNode = root.left;
 					root.left = removeTopMost(root.left);
-					return true;
+					if (root.left != null) {
+						root.left.parent = root;
+					}
+					return removedNode;
 				}
 				root = root.left;
 				return remove(element, root);
 
 		}
 
-		return false;
+		return root;
 	}
 
 	private Node removeTopMost(Node root) {
@@ -345,8 +363,16 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 			if (root.left.right == null) {
 				root.left.right = root.right;
 				root = root.left;
+				root.right.parent = root;
 			} else {
-				root.value = removeRightMostNode(root.left);
+				Node tempNode = new Node(root.value);
+				tempNode.right = root.right;
+				tempNode.left = root.left;
+				tempNode.parent = root.parent;
+				tempNode.value = removeRightMostNode(tempNode.left);
+				root = tempNode;
+				tempNode.left.parent = root;
+				tempNode.right.parent = root;
 			}
 
 		}
@@ -358,6 +384,10 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 		if (root.right.right == null) {
 			T value = root.right.value;
 			root.right = root.right.left;
+			if (root.right != null) {
+				root.right.parent = root;
+			}
+
 			return value;
 		}
 

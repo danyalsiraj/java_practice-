@@ -111,4 +111,27 @@ public class BalancedBinaryTree<T extends Comparable<T>> extends BinaryTree<T> {
 
 	}
 
+	@Override
+	public boolean remove(T element) {
+
+		Node removedNode = remove(element, root);
+		Node parentNode = removedNode.parent;
+
+		if (removedNode != null) {
+			if (parentNode == null) {
+				return true;
+			}
+			if (parentNode.left == null && parentNode.right == null) {
+				balance(parentNode, parentNode.value);
+			} else if (removedNode.value.compareTo(parentNode.value) > 0) {
+				balance(parentNode.left, parentNode.left.value);
+			} else {
+				balance(parentNode.right, parentNode.right.value);
+			}
+			return true;
+
+		}
+		return false;
+	}
+
 }

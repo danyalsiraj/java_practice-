@@ -1,6 +1,9 @@
 package Test.collections;
 
-import java.util.Collection;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Deque;
 
 import org.junit.Before;
@@ -13,21 +16,22 @@ import org.junit.runners.Parameterized.Parameters;
 import collections.AStack;
 import collections.AStackV2;
 import collections.LStack;
+import collections.QueueStack;
 
-import static org.junit.Assert.*;
 @RunWith(Parameterized.class)
 
 public class AStackTest {
-	
+
 	@Parameters
-	public static Class[] data(){
-		
-		return new Class[]{AStack.class,AStackV2.class,LStack.class};
-		
+	public static Class[] data() {
+
+		return new Class[] { AStack.class, AStackV2.class, LStack.class, QueueStack.class };
+
 	}
+
 	@Parameter
 	public Class stackClass;
-	
+
 	Deque<String> stack;
 
 	@Before
@@ -43,7 +47,7 @@ public class AStackTest {
 			assertEquals("size should be " + i, i, stack.size());
 			stack.push("danyal" + i);
 			assertFalse("size should be" + (i + 1), stack.isEmpty());
-			assertEquals("size should be " + (i+1), i + 1, stack.size());
+			assertEquals("size should be " + (i + 1), i + 1, stack.size());
 
 		}
 
@@ -70,14 +74,14 @@ public class AStackTest {
 		for (int i = 0; i < 15; i++) {
 			assertEquals("size should be " + i, i, stack.size());
 			stack.push("danyal" + i);
-			assertFalse("size should be" + (i+1), stack.isEmpty());
-			assertEquals("size should be " + (i+1), i + 1, stack.size());
+			assertFalse("size should be" + (i + 1), stack.isEmpty());
+			assertEquals("size should be " + (i + 1), i + 1, stack.size());
 
 		}
 		for (int i = 14; i >= 0; i--) {
 
 			assertEquals("the top elemnet does not match", "danyal" + i, stack.peek());
-			assertEquals("size should be " + (i+1), i + 1, stack.size());
+			assertEquals("size should be " + (i + 1), i + 1, stack.size());
 			assertEquals("the top element should be zaid", "danyal" + i, stack.pop());
 			assertEquals("size should be " + i, i, stack.size());
 

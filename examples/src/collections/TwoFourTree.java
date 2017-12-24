@@ -11,7 +11,19 @@ public class TwoFourTree<T extends Comparable<T>> implements IBinaryTree<T> {
 	int size;
 	Node root;
 
-	public class Node {
+	public class Pair {
+		Node node;
+		int index;
+
+		public Pair(Node node, int index) {
+			super();
+			this.node = node;
+			this.index = index;
+		}
+
+	}
+
+	public class Node implements Comparable<Node> {
 
 		Node parent;
 		ArrayList<T> values = new ArrayList<T>();
@@ -47,6 +59,12 @@ public class TwoFourTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
 			});
 		}
+
+		@Override
+		public int compareTo(Node o) {
+			// TODO Auto-generated method stub
+			return this.values.get(0).compareTo(o.values.get(0));
+		}
 	}
 
 	@Override
@@ -73,53 +91,55 @@ public class TwoFourTree<T extends Comparable<T>> implements IBinaryTree<T> {
 		if (value == null) {
 			return false;
 		}
-		return contains(root, value);
+		return contains(root, value) != null;
 	}
 
-	public boolean contains(Node root, T value) {
+	public Node contains(Node root, T value) {
 		if (value == null || root == null) {
-			return false;
+			return null;
 		}
 		if (root.values.contains(value)) {
-			return true;
+			return root;
 		}
 		if (root.childern.isEmpty()) {
-			return false;
+			return null;
 		}
 
 		for (int i = 0; i < root.values.size(); i++) {
 
 			if (value.compareTo(root.values.get(i)) < 0) {
 				if (root.childern.size() <= i) {
-					return false;
+					return null;
 				}
 				Node tempNode = root.childern.get(i);
-				if (tempNode != null && tempNode.values.get(0).compareTo(root.values.get(i)) < 0) {
+				if (tempNode != null && tempNode.compareTo(root) < 0) {
 					return contains(tempNode, value);
 				} else {
-					return false;
+					return null;
 				}
 			} else if (i + 1 == root.values.size()) {
 				if (root.childern.size() <= i + 1) {
-					return false;
+					return null;
 				}
 				Node tempNode = root.childern.get(i + 1);
 
-				if (tempNode != null && tempNode.values.get(0).compareTo(root.values.get(i)) > 0) {
+				if (tempNode != null && tempNode.compareTo(root) > 0) {
 					return contains(tempNode, value);
 				} else {
-					return false;
+					return null;
 				}
 			}
 
 		}
-		return false;
+		return null;
 
 	}
 
 	@Override
 	public void removeAll() {
 		// TODO Auto-generated method stub
+		root = null;
+		size = 0;
 
 	}
 
@@ -150,7 +170,131 @@ public class TwoFourTree<T extends Comparable<T>> implements IBinaryTree<T> {
 	@Override
 	public boolean remove(T element) {
 		// TODO Auto-generated method stub
+		Node node = contains(root, element);
+		if (node == null) {
+			return false;
+		}
+		remove(node, element);
+		size--;
+		return true;
+	}
+
+	private Pair nextInOrder(Node node, T value) {
+		int index = node.values.indexOf(value);
+		for (int i = 0; i < node.childern.size(); i++) {
+			if (node.childern.get(i).values.get(0).compareTo(value) > 0
+					&& (node.values.size() == index + 1 || node.values.get(index + 1).compareTo(value) < 0)) {
+
+				Node firstRightNode = node.childern.get(i);
+
+				return new Pair(leftMostNode(firstRightNode), 0);
+			}
+
+		}
+		if (node.values.size() > index + 1) {
+
+			return new Pair(node, index + 1);
+		}
+
+		return null;
+	}
+
+	private Node leftMostNode(Node node) {
+		// TODO Auto-generated method stub
+		if (node.childern.isEmpty() || node.values.get(0).compareTo(node.childern.get(0).values.get(0)) < 0) {
+			return node;
+		}
+		return leftMostNode(node.childern.get(0));
+	}
+
+	private boolean isUnderFlowed(Node node) {
+		if ((node.values.size() - node.childern.size() < -1) || node.values.size() == 0) {
+
+			return true;
+		}
 		return false;
+	}
+
+	private void remove(Node node, T element) {
+		// TODO Auto-generated method stub
+		if (node == null) {
+			return;
+		}
+		Pair nextInOrderPair = nextInOrder(node, element);
+		T nextVal;
+		Node underFlowedNode = null;
+		if (nextInOrderPair != null) {
+			Node nextNode = nextInOrderPair.node;
+			int index = nextInOrderPair.index;
+			nextVal = nextNode.values.get(index);
+			node.values.remove(element);
+			if (node != nextNode) {
+				node.addValue(nextVal);
+				nextNode.values.remove(nextVal);
+			}
+			underFlowedNode = nextNode;
+		} else {
+			// figure it out
+			node.values.remove(element);
+			underFlowedNode = node;
+		}
+
+		handleUnderFlow(underFlowedNode);
+
+	}
+
+	private void handleUnderFlow(Node underFlowedNode) {
+		if (underFlowedNode == null) {
+			return;
+
+		}
+		if (underFlowedNode == root) {
+			if (underFlowedNode.childern.size() > 0) {
+				root = underFlowedNode.childern.get(0);
+			} else if (isUnderFlowed(underFlowedNode)) {
+				root = null;
+			}
+			return;
+		}
+		// TODO Auto-generated method stub
+		if (isUnderFlowed(underFlowedNode)) {
+			Node AdjNode = getAdjNode(underFlowedNode);
+			// handle null sce
+			Node parent = underFlowedNode.parent;
+			if (AdjNode.values.size() == 1) {
+				// 2 node
+				underFlowedNode.values.addAll(AdjNode.values);
+				underFlowedNode.addValue(parent.values.remove(parent.values.size() - 1));
+				for (Node child : AdjNode.childern) {
+					underFlowedNode.addChildern(child);
+				}
+				parent.childern.remove(AdjNode);
+				handleUnderFlow(parent);
+
+			} else {
+				// 3,4 node
+				underFlowedNode.addChildern(AdjNode.childern.remove(AdjNode.childern.size() - 1));
+				underFlowedNode.addValue(parent.values.remove(parent.values.size() - 1));
+				parent.addValue(AdjNode.values.remove(AdjNode.values.size() - 1));
+
+			}
+		}
+	}
+
+	private Node getAdjNode(Node node) {
+		// TODO Auto-generated method stub
+		Node parent = node.parent;
+		if (parent == null) {
+			return null;
+		}
+		int index = parent.childern.indexOf(node);
+
+		if (index - 1 >= 0 && parent.childern.get(index - 1) != null) {
+			return parent.childern.get(index - 1);
+		} else if (index + 1 < parent.childern.size() && parent.childern.get(index + 1) != null) {
+			return parent.childern.get(index + 1);
+		}
+		return null;
 	}
 
 	@Override
@@ -226,8 +370,8 @@ public class TwoFourTree<T extends Comparable<T>> implements IBinaryTree<T> {
 		}
 
 		root = root.parent;
-		root.childern.add(left);
-		root.childern.add(right);
+		root.addChildern(left);
+		root.addChildern(right);
 
 		split(root);
 

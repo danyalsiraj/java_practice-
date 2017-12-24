@@ -90,7 +90,9 @@ public class TwoFourTree<T extends Comparable<T>> implements IBinaryTree<T> {
 		for (int i = 0; i < root.values.size(); i++) {
 
 			if (value.compareTo(root.values.get(i)) < 0) {
-
+				if (root.childern.size() <= i) {
+					return false;
+				}
 				Node tempNode = root.childern.get(i);
 				if (tempNode != null && tempNode.values.get(0).compareTo(root.values.get(i)) < 0) {
 					return contains(tempNode, value);
@@ -98,6 +100,9 @@ public class TwoFourTree<T extends Comparable<T>> implements IBinaryTree<T> {
 					return false;
 				}
 			} else if (i + 1 == root.values.size()) {
+				if (root.childern.size() <= i + 1) {
+					return false;
+				}
 				Node tempNode = root.childern.get(i + 1);
 
 				if (tempNode != null && tempNode.values.get(0).compareTo(root.values.get(i)) > 0) {
@@ -156,12 +161,44 @@ public class TwoFourTree<T extends Comparable<T>> implements IBinaryTree<T> {
 			size++;
 			return true;
 		}
-		root.addValue(value);
+		Node toAdd = findNode(root, value);
+		toAdd.addValue(value);
 		size++;
-		if (root.values.size() > MAX_KEYS) {
-			split(root);
+		if (toAdd.values.size() > MAX_KEYS) {
+			split(toAdd);
 		}
 		return true;
+	}
+
+	private Node findNode(Node root, T value) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < root.values.size(); i++) {
+			T currentNode = root.values.get(i);
+			if (value.compareTo(currentNode) < 0) {
+				if (root.childern.size() <= i) {
+					return root;
+				}
+				Node tempNode = root.childern.get(i);
+				if (tempNode != null && tempNode.values.get(0).compareTo(currentNode) < 0) {
+					return findNode(tempNode, value);
+				} else {
+					return root;
+				}
+			} else if (i + 1 == root.values.size()) {
+				if (root.childern.size() <= i + 1) {
+					return root;
+				}
+				Node tempNode = root.childern.get(i + 1);
+
+				if (tempNode != null && tempNode.values.get(0).compareTo(currentNode) > 0) {
+					return findNode(tempNode, value);
+				} else {
+					return root;
+				}
+			}
+
+		}
+		return root;
 	}
 
 	private void split(Node root) {

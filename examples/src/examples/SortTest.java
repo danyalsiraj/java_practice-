@@ -16,7 +16,7 @@ public class SortTest {
 	@Parameters
 	public static Class[] data() {
 
-		return new Class[] { InsertionSort.class, MergeSort.class };
+		return new Class[] { InsertionSort.class, MergeSort.class, QuickSort.class };
 
 	}
 
